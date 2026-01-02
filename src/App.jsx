@@ -1,11 +1,19 @@
 import { useState } from "react";
 import GraphForce2D from "./components/GraphForce2D";
+import CytoGraph from "./components/CytoGraph";
+import VisNetwork from "./components/VisNetwork";
 import { matrixToGraph, listToGraph } from "./lib/graphParse";
+import Tooltip from "./components/Tooltip"
 
 export default function App() {
   const [mode, setMode] = useState("matrix"); // matrix or list
   const [directed, setDirected] = useState(false);
   const [raw, setRaw] = useState("0 1 0\n1 0 1\n0 1 0");
+  const [selectedValue, setSelectedValue] = useState('option1');
+
+  const handleChange = (event) => {
+    setSelectedValue(event.target.value);
+  }
 
   let nodes = [];
   let links = [];
@@ -30,9 +38,9 @@ export default function App() {
   }
 
   return (
-    <div className="grid grid-cols-[360px_1fr] w-screen h-screen">
-      <div className="p-7 border-r border-gray-500">
-        <h3 className="text-3xl font-semibold">Input Area</h3>
+    <div className="flex flex-row">
+      <div className="flex-1 w-50 p-7 border-r border-gray-500">
+        <h3 className="text-3xl font-semibold">Input Section</h3>
         <div className="mt-10">
           <p className="font-semibold mb-2">Input type: </p>
           <label class="mb-3 flex items-center space-x-3 cursor-pointer text-lg text-gray-800 p-4 border-2 border-gray-200 rounded-lg has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50 transition-all">
@@ -54,7 +62,7 @@ export default function App() {
         <div className="mt-2">
           {/* checkbox */}
           <label className=" mt-10 flex items-center space-x-3 cursor-pointer text-lg text-gray-800 p-4 select-none border-2 border-gray-200 rounded-lg has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50 transition-all">
-            <input type="checkbox" className="sr-only peer" checked={directed} onChange={(e) => setDirected(e.target.checked)}/>
+            <input type="checkbox" className="sr-only peer" checked={directed} onChange={(e) => setDirected(e.target.checked)} />
             <div className="w-6 h-6 rounded-md border-2 border-gray-300 flex items-center justify-center
                       transition-all duration-200
                       peer-checked:border-blue-600 peer-checked:bg-blue-600">
@@ -84,14 +92,29 @@ export default function App() {
 
         <p class="text-s text-neutral-900">How to enter?</p>
         <p class="text-xs text-neutral-600">
-          Matrix: rows of numbers <br /> List: lines like "0: 1(2), 3" or "A - B, C" with optional weights in parentheses.
+          Matrix: rows of numbers <br />
+          List: lines like "0: 1(2), 3" or "A - B, C" with optional weights in parentheses.
         </p>
 
       </div>
 
-      <div className="bg-gray-200 text-gray-500">
-        <div className="m-3 text-xl">Playground</div>
-        <GraphForce2D nodes={nodes} links={links} directed={directed} />
+      <div className="flex-3 w-200 bg-gray-200 text-gray-500">
+        <div className="flex flex-row justify-between m-3 text-xl">
+          <div>Playground</div>
+          <div>
+            <label htmlFor="dropdown">Change View: </label>
+            <select className="bg-white px-2 py-1 rounded-lg border-blue-400 border-1 focus:outline-none" id="dropdown" value={selectedValue} onChange={handleChange}>
+              <option value="option1">GraphForce2D</option>
+              <option value="option2">CytoGraph</option>
+              <option value="option3">VisNetwork</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          {selectedValue==="option1" && <GraphForce2D nodes={nodes} links={links} directed={directed} />}
+          {selectedValue==="option2" && <CytoGraph nodes={nodes} links={links} />}
+          {selectedValue==="option3" && <VisNetwork nodes={nodes} links={links} directed={directed} />}
+        </div>
       </div>
     </div>
   );

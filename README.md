@@ -1,12 +1,67 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Graph Visualizer 🚀
+A visualization tool for graph data structure.
 
-Currently, two official plugins are available:
+![Version](https://img.shields.io/badge/version-1.0.1-green.svg)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🧐 Overview
+A simple tool to visualize complex graphs from adjacency list or adjacency matrix. Useful when solving graph problems from leetcode because leetcode does not provide a graph visualizer for its testcases like Binary Trees.
+## ✨ Features
 
-## Expanding the ESLint configuration
+- Powered by react-force-graph, VisNetwork and Cytoscape for easy switch between different render styles.
+- Real-time rendering of 1,000+ nodes/edges.
+- Responsive UI for improved learning efficiency.
+- Light/dark mode toggle
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+## Screenshots
+
+To be added...
+
+## 🛠️ Tech Stack
+
+**Frontend:** React, TailwindCSS, react-force-graph, VisNetwork, Cytoscape.
+
+
+## 🚀 Getting Started
+
+### Prerequisites
+Node.js
+
+### App URL
+    https://www.graph-visualizer.vercel.app
+[Click Here](https://www.graph-visualizer.vercel.app)
+
+### Installation
+1. Clone the repo:
+
+   ```bash
+   git clone https://github.com/satvikxvansh/graph-visualizer.git
+2. Install Dependencies
+    ```bash
+    npm install
+3. Run the project
+    ```bash
+    npm run dev
+## Contributing
+
+Contributions are always welcome!
+
+Please adhere to this project's `code of conduct`.
+
+
+## Authors
+
+- [@satvikxvansh](https://www.github.com/satvikxvansh)
+
+
+## 🔗 Links
+[![portfolio](https://img.shields.io/badge/my_portfolio-000?style=for-the-badge&logo=ko-fi&logoColor=white)](https://satvikvansh.vercel.app)
+
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](www.linkedin.com/in/satvik-vansh)
+
+
+## License
+
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+

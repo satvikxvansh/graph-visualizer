@@ -51,6 +51,34 @@ export function listToGraph(lines, directed = false) {
       links.push({ source: u, target: v, weight: w });
     }
   }
+  
   const nodes = Array.from(nodeSet).map((id) => ({ id, label: id }));
+  return { nodes, links };
+}
+
+export function arrayListToGraph(adjList, directed = false, labels) {
+  const n = adjList.length;
+  const nodes = Array.from({ length: n }, (_, i) => ({
+    id: i,
+    label: labels && labels[i] ? labels[i] : String(i)
+  }));
+  
+  const links = [];
+  const seen = new Set(); // for undirected dedup
+  
+  for (let i = 0; i < n; i++) {
+    const neighbors = adjList[i];
+    for (const j of neighbors) {
+      if (!directed) {
+        const a = Math.min(i, j);
+        const b = Math.max(i, j);
+        const key = `${a}|${b}`;
+        if (seen.has(key)) continue;
+        seen.add(key);
+      }
+      links.push({ source: i, target: j });
+    }
+  }
+  
   return { nodes, links };
 }

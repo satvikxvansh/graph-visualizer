@@ -1,4 +1,3 @@
-
 # Graph Visualizer 🚀
 A visualization tool for graph data structure.
 

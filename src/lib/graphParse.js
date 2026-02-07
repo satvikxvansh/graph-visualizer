@@ -51,7 +51,6 @@ export function listToGraph(lines, directed = false) {
       links.push({ source: u, target: v, weight: w });
     }
   }
-  
   const nodes = Array.from(nodeSet).map((id) => ({ id, label: id }));
   return { nodes, links };
 }

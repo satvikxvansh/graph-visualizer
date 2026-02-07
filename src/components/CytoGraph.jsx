@@ -27,7 +27,7 @@ export default function CytoGraph({ nodes, links }) {
       elements={elements}
       stylesheet={stylesheet}
       layout={{ name: "cose" }}
-      style={{ width: "100%", height: "700px" }}
+      style={{ width: "100%", height: "710px" }}
     />
   );
 }

@@ -3,6 +3,7 @@ import GraphForce2D from "./components/GraphForce2D";
 import CytoGraph from "./components/CytoGraph";
 import VisNetwork from "./components/VisNetwork";
 import { matrixToGraph, listToGraph, arrayListToGraph } from "./lib/graphParse";
+import { FaGithub } from "react-icons/fa";
 import Tooltip from "./components/Tooltip"
 
 export default function App() {
@@ -10,6 +11,7 @@ export default function App() {
   const [directed, setDirected] = useState(false);
   const [raw, setRaw] = useState("0 1 0\n1 0 1\n0 1 0");
   const [selectedValue, setSelectedValue] = useState('option1');
+  const [placeholderText, setPlaceholderText] = useState('0 1 0\n1 0 1\n0 1 0');
 
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
@@ -24,48 +26,48 @@ export default function App() {
         .split(/\n+/)
         .map((r) => r.trim().split(/\s+/).map(Number));
       ({ nodes, links } = matrixToGraph(mat, directed));
-      console.log(mat);
-      console.log({ nodes, links });
       // console.log(mat);
-    } else if(mode === "List") {
+      // console.log({ nodes, links });
+      // console.log(mat);
+    } else if (mode === "list") {
       const lines = raw.trim().split(/\n+/);
-      console.log("here :");
-      console.log(lines);
+      // console.log("here :");
+      // console.log(lines);
       ({ nodes, links } = listToGraph(lines, directed));
-    }else if (mode === "arrayList") {
+    } else if (mode === "arrayList") {
       // Parse JSON array format: [[1,2,3],[0,2],[0,1,3],[0,2]]
       const adjList = JSON.parse(raw);
       ({ nodes, links } = arrayListToGraph(adjList, directed));
     }
-  } catch{
+  } catch {
     // optionally show parse error in UI
   }
 
   return (
-    <div className="flex">
-      <div className="flex flex-col flex-none p-7 border-r border-gray-500">
+    <div className="grid grid-cols-[400px_1fr] h-screen">
+      <div className="flex justify-between flex-col p-7 border-r border-gray-500">
         <h3 className="text-3xl font-semibold">Input Section</h3>
         <div>
           <p className="font-semibold mt-5 mb-2">Input type: </p>
           <div className="flex flex-col justify-around gap-2">
-            <label class="flex items-center space-x-3 cursor-pointer text-lg text-gray-800 p-4 border-2 border-gray-200 rounded-lg has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50 transition-all">
-              <input type="radio" checked={mode === "matrix"} onChange={() => setMode("matrix")} class="sr-only peer" />
-              <span class="w-6 h-6 rounded-full border-2 border-gray-300 flex items-center justify-center transition-all duration-200 peer-checked:border-blue-600 peer-checked:bg-blue-600">
-                <span class="w-2.5 h-2.5 rounded-full bg-white scale-0 transition-transform duration-200 peer-checked:scale-100"></span>
+            <label className="flex items-center space-x-3 cursor-pointer text-lg text-gray-800 p-4 border-2 border-gray-200 rounded-lg has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50 transition-all">
+              <input type="radio" checked={mode === "matrix"} onChange={() => { setMode("matrix"); setPlaceholderText("0 1 0\n1 0 1\n0 1 0") }} className="sr-only peer" />
+              <span className="w-6 h-6 rounded-full border-2 border-gray-300 flex items-center justify-center transition-all duration-200 peer-checked:border-blue-600 peer-checked:bg-blue-600">
+                <span className="w-2.5 h-2.5 rounded-full bg-white scale-0 transition-transform duration-200 peer-checked:scale-100"></span>
               </span>
               <span>Matrix</span>
             </label>
-            <label class="flex items-center space-x-3 cursor-pointer text-lg text-gray-800 p-4 border-2 border-gray-200 rounded-lg has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50 transition-all">
-              <input type="radio" checked={mode === "list"} onChange={() => setMode("list")} class="sr-only peer" />
-              <span class="w-6 h-6 rounded-full border-2 border-gray-300 flex items-center justify-center transition-all duration-200 peer-checked:border-blue-600 peer-checked:bg-blue-600">
-                <span class="w-2.5 h-2.5 rounded-full bg-white scale-0 transition-transform duration-200 peer-checked:scale-100"></span>
+            <label className="flex items-center space-x-3 cursor-pointer text-lg text-gray-800 p-4 border-2 border-gray-200 rounded-lg has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50 transition-all">
+              <input type="radio" checked={mode === "list"} onChange={() => { setMode("list"); setPlaceholderText("0: 1\n1: 0,2\n2: 1") }} className="sr-only peer" />
+              <span className="w-6 h-6 rounded-full border-2 border-gray-300 flex items-center justify-center transition-all duration-200 peer-checked:border-blue-600 peer-checked:bg-blue-600">
+                <span className="w-2.5 h-2.5 rounded-full bg-white scale-0 transition-transform duration-200 peer-checked:scale-100"></span>
               </span>
               <span>List</span>
             </label>
-            <label class="flex items-center space-x-3 cursor-pointer text-lg text-gray-800 p-4 border-2 border-gray-200 rounded-lg has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50 transition-all">
-              <input type="radio" checked={mode === "arrayList"} onChange={() => setMode("arrayList")} class="sr-only peer" />
-              <span class="w-6 h-6 rounded-full border-2 border-gray-300 flex items-center justify-center transition-all duration-200 peer-checked:border-blue-600 peer-checked:bg-blue-600">
-                <span class="w-2.5 h-2.5 rounded-full bg-white scale-0 transition-transform duration-200 peer-checked:scale-100"></span>
+            <label className="flex items-center space-x-3 cursor-pointer text-lg text-gray-800 p-4 border-2 border-gray-200 rounded-lg has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50 transition-all">
+              <input type="radio" checked={mode === "arrayList"} onChange={() => { setMode("arrayList"); setPlaceholderText("[[1],[0,2],[1]]") }} className="sr-only peer" />
+              <span className="w-6 h-6 rounded-full border-2 border-gray-300 flex items-center justify-center transition-all duration-200 peer-checked:border-blue-600 peer-checked:bg-blue-600">
+                <span className="w-2.5 h-2.5 rounded-full bg-white scale-0 transition-transform duration-200 peer-checked:scale-100"></span>
               </span>
               <span>Array List (Best for Leetcode)</span>
             </label>
@@ -99,21 +101,43 @@ export default function App() {
         <textarea
           value={raw}
           onChange={(e) => setRaw(e.target.value)}
-          class=" border-1 rounded-xl p-2 w-full h-60 mt-2 font-mono"
+          placeholder={placeholderText}
+          className=" border-1 rounded-xl p-2 w-full h-40 mt-2 font-mono"
         />
 
-        <p class="text-s text-neutral-900">How to enter?</p>
-        <p class="text-xs text-neutral-600">
-          Matrix: rows of numbers <br />
-          List: lines like "0: 1(2), 3" or "A - B, C" with optional weights in parentheses.
-        </p>
+        <div className="flex flex-col">
+          <Tooltip
+            position="right"
+            content={
+              <div>
+                <h3 className="text-neutral-800">How to enter?</h3>
+                <p className="text-xs text-neutral-600">
+                  Matrix: rows of numbers. <br />
+                  List: lines like "0: 1(2), 3" or "A - B, C" with optional weights in parentheses. <br />
+                  Array List: Array of array with index 0 denoting nodes connected with node 0. <br />
+                  Zoom in or out using mouse wheel.
+                </p>
+              </div>
+            }
+          >
+          <div className="mt-5 hover:bg-blue-100 hover:border-blue-500  border-2 border-gray-300 rounded-xl p-2 transition-all font-semibold flex justify-center items-center cursor-pointer">Help?</div>
+          </Tooltip>
+
+          <a className="mt-2 hover:bg-blue-100 hover:border-blue-500  border-2 border-gray-300 rounded-xl p-2 transition-all" href="https://github.com/satvikxvansh/graph-visualizer" target="_blank" rel="noopener noreferrer">
+            <div className="font-semibold flex justify-center items-center gap-2">
+              <p>Contribute</p>
+              <FaGithub />
+            </div>
+          </a>
+        </div>
+
       </div>
 
-      <div className="flex flex-1">
-        <div className="flex flex-col bg-gray-200 text-gray-500">
+      <div className="overflow-hidden min-h-0 h-full">
+        <div className="flex flex-col bg-gray-200 text-gray-500 h-full">
           <div className="flex justify-between m-3 text-xl">
             <div>Playground</div>
-            <div>
+            <div className="flex items-center gap-2">
               <label htmlFor="dropdown">Change View: </label>
               <select className="bg-white px-2 py-1 rounded-lg border-blue-400 border-1 focus:outline-none" id="dropdown" value={selectedValue} onChange={handleChange}>
                 <option value="option1">GraphForce2D</option>
@@ -122,10 +146,10 @@ export default function App() {
               </select>
             </div>
           </div>
-          <div className="">
-            {selectedValue==="option1" && <GraphForce2D nodes={nodes} links={links} directed={directed} />}
-            {selectedValue==="option2" && <CytoGraph nodes={nodes} links={links} />}
-            {selectedValue==="option3" && <VisNetwork nodes={nodes} links={links} directed={directed} />}
+          <div className="flex-1">
+            {selectedValue === "option1" && <GraphForce2D nodes={nodes} links={links} directed={directed} />}
+            {selectedValue === "option2" && <CytoGraph nodes={nodes} links={links} directed={directed} />}
+            {selectedValue === "option3" && <VisNetwork nodes={nodes} links={links} directed={directed} />}
           </div>
         </div>
       </div>
